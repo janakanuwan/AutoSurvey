@@ -32,6 +32,8 @@ You can also access our [web demo](http://47.236.242.17:8271/)to generate survey
 
 - Install [miniconda](https://docs.conda.io/en/latest/miniconda.html)
 - Tested on Win 11 laptop with RTX4060 GPU
+   - May need to [install the CUDA](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows) also
+   - Use `ncvv --version` or `nvidia-smi` to verify the CUDA installation
 
 ## Installation
 
