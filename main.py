@@ -73,9 +73,9 @@ def main(args):
 
     raw_survey, raw_survey_with_references, raw_references, refined_survey, refined_survey_with_references, refined_references = write_subsection(args.topic, args.model, outline_with_description, args.subsection_len, args.rag_num, db, args.api_key, args.api_url)
 
-    with open(f'{args.saving_path}/{args.topic}.md', 'a+') as f:
+    with open(f'{args.saving_path}/{args.topic}.md', 'a+', encoding="utf-8") as f:
         f.write(refined_survey_with_references)
-    with open(f'{args.saving_path}/{args.topic}.json', 'a+') as f:
+    with open(f'{args.saving_path}/{args.topic}.json', 'a+', encoding="utf-8") as f:
         save_dic = {}
         save_dic['survey'] = refined_survey_with_references
         save_dic['reference'] = refined_references

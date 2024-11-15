@@ -18,12 +18,13 @@ class tokenCounter():
     def num_tokens_from_string(self, string:str) -> int:
         return len(self.encoding.encode(string))
 
-    def num_tokens_from_list_string(self, list_of_string:List[str]) -> int:
+    def num_tokens_from_list_string(self, list_of_strings):
         num = 0
-        for s in list_of_string:
-            num += len(self.encoding.encode(s))
+        for s in list_of_strings:
+            if s is not None:  # Only process if s is not None
+                num += len(self.encoding.encode(str(s)))  # Convert to string to avoid errors
         return num
-    
+
     def compute_price(self, input_tokens, output_tokens, model):
         return (input_tokens/1000) * self.model_price[model][0] + (output_tokens/1000) * self.model_price[model][1]
 

@@ -47,6 +47,9 @@ class database():
         
     def batch_search(self, query_vectors, top_k=1, title=False):
         query_vectors = np.array(query_vectors).astype('float32')
+        if query_vectors.ndim == 1:
+            query_vectors = query_vectors.reshape(1, -1)  # Reshape to (1, d) if it's a single vector
+
         if title:
             distances, indices = self.title_loaded_index.search(query_vectors, top_k)
         else:

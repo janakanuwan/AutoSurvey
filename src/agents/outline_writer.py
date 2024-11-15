@@ -269,9 +269,15 @@ class outlineWriter():
         return title, sections, descriptions
     
     def extract_subsections_subdescriptions(self, outline):
-        subsections, subdescriptions = [], []
-        for i in range(100):
-            if f'Subsection {i+1}' in outline:
+        if outline is None:
+            return [], []  # or handle it as appropriate for your application
+            # Continue with the rest of the function as usual
+        subsections = []
+        subdescriptions = []
+
+        # The existing loop logic, with a modified check for None
+        for i, sub_outline in enumerate(outline):
+            if sub_outline and f'Subsection {i + 1}' in sub_outline:
                 subsections.append(outline.split(f'Subsection {i+1}: ')[1].split('\n')[0])
                 subdescriptions.append(outline.split(f'Description {i+1}: ')[1].split('\n')[0])
         return subsections, subdescriptions

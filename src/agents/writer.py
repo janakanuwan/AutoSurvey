@@ -129,7 +129,8 @@ class subsectionWriter():
         self.input_token_usage += self.token_counter.num_tokens_from_list_string(prompts)
         contents = self.api_model.batch_chat(prompts, temperature=1)
         self.output_token_usage += self.token_counter.num_tokens_from_list_string(contents)
-        contents = [c.replace('<format>','').replace('</format>','') for c in contents]
+        # Filter out None values from `contents`
+        contents = [c.replace('<format>', '').replace('</format>', '') for c in contents if c is not None]
 
         prompts = []
         for content, paper_texts in zip(contents, paper_texts_l):
@@ -137,7 +138,7 @@ class subsectionWriter():
         self.input_token_usage += self.token_counter.num_tokens_from_list_string(prompts)
         contents = self.api_model.batch_chat(prompts, temperature=1)
         self.output_token_usage += self.token_counter.num_tokens_from_list_string(contents)
-        contents = [c.replace('<format>','').replace('</format>','') for c in contents]
+        contents = [c.replace('<format>', '').replace('</format>', '') for c in contents if c is not None]
     
         res_l[idx] = contents
         return contents
@@ -191,6 +192,11 @@ class subsectionWriter():
 
         Directly return the refined subsection without any other informations:
         '''
+
+        print("Contents passed to `lce`:", contents)  # To check what `contents` contains
+        if len(contents) < 3:
+            print("Warning: `contents` has fewer than 3 elements:", contents)
+            return  # Or handle this case as appropriate for your application
 
         prompt = self.__generate_prompt(LCE_PROMPT, paras={'OVERALL OUTLINE': outline,'PREVIOUS': contents[0],\
                                                                           'FOLLOWING':contents[2],'TOPIC':topic,'SUBSECTION':contents[1]})

@@ -1,4 +1,7 @@
 # AutoSurvey (NeurIPS 2024)
+
+Please refer to the original repo [AutoSurveys/AutoSurvey](https://github.com/AutoSurveys/AutoSurvey). This is a modified version to fix some issues with development.
+
 <p align="center">
    <a href="https://arxiv.org/abs/2406.10252">AutoSurvey: Large Language Models Can Automatically Write Surveys</a>
 </p>
@@ -27,21 +30,22 @@ You can also access our [web demo](http://47.236.242.17:8271/)to generate survey
 
 ## Requirements
 
-- Python 3.10.x
-- Required Python packages listed in `requirements.txt`
+- Install [miniconda](https://docs.conda.io/en/latest/miniconda.html)
+- Tested on Win 11 laptop with RTX4060 GPU
 
 ## Installation
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/AutoSurveys/AutoSurvey.git
+   git clone git@github.com:janakanuwan/AutoSurvey.git
    cd AutoSurvey
    ```
 
-2. Install the required packages:
+2. Install the required packages by creating the conda environment `auto_survey`:
    ```sh
-   pip install -r requirements.txt
+   conda env create -f environment-gpu.yml
    ```
+   - To completely remove previous conda environment use, `conda remove -n auto_survey --all`, then recreate the environment using the above.
 
 3. Download the database: (Here we provide a database containing 530,000 arXiv paper abstracts and all papers are under the CS category. You can contact [us](mailto:qguo@smail.nju.edu.cn) to obtain the database containing the full content of the papers. )
    https://1drv.ms/u/c/8761b6d10f143944/EaqWZ4_YMLJIjGsEB_qtoHsBoExJ8bdppyBc1uxgijfZBw?e=2EIzti
@@ -55,8 +59,14 @@ You can also access our [web demo](http://47.236.242.17:8271/)to generate survey
 Here is an example command to generate survey on the topic "LLMs for education":
 
 ```sh
+python main.py --topic "LLMs for education" --gpu 1 --model gpt-4o-mini --api_key sk-xxxxxx
+```
+
+OR
+
+```sh
 python main.py --topic "LLMs for education" 
-               --gpu 0
+               --gpu 1
                --saving_path ./output/
                --model gpt-4o-2024-05-13
                --section_num 7
